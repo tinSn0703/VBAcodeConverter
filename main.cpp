@@ -26,6 +26,9 @@ struct ArgumentElement
 	}
 };
 
+const std::string _ArgumentMatchCode = 
+"(ByRef|ByVal|Optional|ParmArray)?[ ]?";
+
 struct FunctionElement
 {
 	AccessAdornment _Access;
