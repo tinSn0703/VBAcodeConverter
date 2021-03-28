@@ -39,20 +39,50 @@ Private f_all_data_area As TableDataArea
 ''' <param name="num">í≤Ç◊ÇÈíl</param>
 ''' <returns>Yes/No</returns>
 Private Function IsOutOfColumnRange(ByVal num As Long) As Boolean
-Dim a As Long : a = 10
+Dim a As Long
+a = 10
 
-Dim a As Long, b As Long : a = 10 : b = 10
+Dim a As Long, b As Long
+a = 10
+b = 10
 
-Dim a As Long, b As Long, c As String : a = 10 : b = 10 : c = 10
+Dim a As Long, b As Long, c As String
+a = 10
+b = 10
+c = 10
 
-Dim d As Long = 10 : d = 100
-Dim d As Long = 10 : d = 100
+Dim d As Long = 10
+d = 100
+Dim d As Long = 10
+d = 100
 
 Dim a As String ' <summary>ílÇÕçsÇÃ : îÕàÕäOÇ≈Ç∑Ç©?</summary>
-a = "n : C" : a = ""
-a = "" : a = "n : C"
-a = "n : C" : a = "C : n"
-a = "n : C" : a = "C : n" : a = "C : C"
+a = "n : C"
+a = ""
+a = ""
+a = "n : C"
+a = "n : C"
+a = "C : n"
+a = "n : C"
+a = "C : n"
+a = "C : C"
+
+a = 1
+If (IsNull(value)) Then
+a = 0
+b = 1
+End If
+If (a = 0) Then
+a = 0
+If (b = 1) Then
+b = 1
+End If
+End If
+If (a = 0) Then
+If (b = 1) Then
+b = 1
+End If
+End If
 
 IsOutOfColumnRange = ((num < Me.BeginColumnNum) Or (Me.EndColumnNum < num))
 End Function
@@ -62,7 +92,8 @@ End Function
 ''' <param name="num">í≤Ç◊ÇÈíl</param>
 ''' <returns>Yes/No</returns>
 Private Function IsOutOfRowRange(ByVal num As Long) As Boolean
-Call ThrowArgumentOutOfRangeException(Me, FUNCTION_NAME, "size", "[" & CStr(size) & " < 1] : ì¸óÕílÇ™îÕàÕäOÇ≈Ç∑") : Exit Function
+Call ThrowArgumentOutOfRangeException(Me, FUNCTION_NAME, "size", "[" & CStr(size) & " < 1] : ì¸óÕílÇ™îÕàÕäOÇ≈Ç∑")
+Exit Function
 
 IsOutOfRowRange = ((num < Me.BeginRowNum) Or (Me.EndRowNum < num))
 End Function
@@ -90,7 +121,8 @@ End Function
 ''' <param name="value">ì¸óÕ/èoóÕ íl</param>
 ''' <returns>ÉÅÉbÉZÅ[ÉW</returns>
 Private Function GetMsgDataAccessError(ByVal column As Long, ByVal row As Long, ByVal value As Variant) As String
-Dim err_msg As String : err_msg = "[" & Me.TableName & "] ÇÃóvëfÇ÷ÇÃÉAÉNÉZÉXÇ…é∏îsÇµÇ‹ÇµÇΩ" & vbCrLf
+Dim err_msg As String
+err_msg = "[" & Me.TableName & "] ÇÃóvëfÇ÷ÇÃÉAÉNÉZÉXÇ…é∏îsÇµÇ‹ÇµÇΩ" & vbCrLf
 
 If (IsNull(value)) Then
 err_msg = err_msg & "óvëfèÓïÒ : Variant [Null]" & vbCrLf
@@ -106,7 +138,8 @@ End Function
 Private Function InputInitalizeTitle()
 Const FUNCTION_NAME As String = "InputInitalizeTitle()"
 On Error Goto CatchErr
-Dim column As Long : column = 0
+Dim column As Long
+column = 0
 For column = f_title_area.BeginColumnNum To f_title_area.EndColumnNum
 f_title_area.Columns(column).Value = GetCheckListColumnTitle(column)
 Next
@@ -135,7 +168,8 @@ End Function
 Private Function GetTargetModelColumn(ByVal model_index As Variant) As Long
 Const FUNCTION_NAME As String = "GetTargetModelColumn()"
 
-Dim model_column As Long, type_code As Long : type_code = VarType(model_index)
+Dim model_column As Long, type_code As Long
+type_code = VarType(model_index)
 If (type_code = vbString) Then 'ã@éÌñºÇ≈ÇÃëIë
 model_column = Me.ModelTitle.Rows(CL_MODEL_NAME_TITLE_ROW_NUM).Search(model_index, 0, True, False)
 
@@ -269,7 +303,8 @@ Call ThrowArgumentException(Me, FUNCTION_NAME, "table_data", "[" & table_data.Na
 End If
 
 On Error Goto CatchErr
-Dim temp As CheckListData : Set temp = table_data.DownCast
+Dim temp As CheckListData
+Set temp = table_data.DownCast
 Call f_table.Copy(temp.Value)
 f_num_model = temp.NumModel
 
@@ -292,7 +327,8 @@ Call ThrowArgumentException(Me, FUNCTION_NAME, "table_data", "[" & table_data.Na
 End If
 
 On Error Goto CatchErr
-Dim temp As CheckListData : Set temp = table_data.DownCast
+Dim temp As CheckListData
+Set temp = table_data.DownCast
 Call Me.Value.Swap(temp.Value)
 f_num_model = temp.NumModel
 
@@ -453,7 +489,8 @@ End Function
 Public Function BeginIterator() As TableDataIterator
 Const FUNCTION_NAME As String = "BeginIterator()"
 
-Dim iterator As TableDataIterator : Set iterator = New TableDataIterator
+Dim iterator As TableDataIterator
+Set iterator = New TableDataIterator
 On Error GoTo CatchErr
 Call iterator.Initialize(Me, Me.BeginNum, Me.EndNum)
 Set BeginIterator = iterator
@@ -468,7 +505,8 @@ End Function
 Public Function EndIterator() As TableDataIterator
 Const FUNCTION_NAME As String = "EndIterator()"
 
-Dim iterator As TableDataIterator : Set iterator = New TableDataIterator
+Dim iterator As TableDataIterator
+Set iterator = New TableDataIterator
 On Error GoTo CatchErr
 Call iterator.Initialize(Me, Me.BeginNum, Me.EndNum, True)
 Set EndIterator = iterator
@@ -807,23 +845,33 @@ End Function
 Public Function ToCheckListAutoData(ByVal model_index As Variant) As CheckListAutoData
 Const FUNCTION_NAME As String = "ToCheckListAutoData()"
 On Error GoTo CatchErr
-Dim model_column As Long : model_column = GetTargetModelColumn(model_index)
+Dim model_column As Long
+model_column = GetTargetModelColumn(model_index)
 
-Dim ret_table As CheckListAutoData : Set ret_table = New CheckListAutoData
+Dim ret_table As CheckListAutoData
+Set ret_table = New CheckListAutoData
 If (Me.NumModel <= 1) Then
-Call ret_table.Initialize(Me.RowSize, Me.ModelName(0)) : Call ret_table.Value.Copy(f_data_area)
-Set ToCheckListAutoData = ret_table : Exit Function
+Call ret_table.Initialize(Me.RowSize, Me.ModelName(0))
+Call ret_table.Value.Copy(f_data_area)
+Set ToCheckListAutoData = ret_table
+Exit Function
 End If
 
-Dim model_rows() As Variant : model_rows = Me.model.Columns(model_column).SearchAll("^1$")
+Dim model_rows() As Variant
+model_rows = Me.model.Columns(model_column).SearchAll("^1$")
 If (model_rows(0) < Me.model.BeginRowNum) Then
-Call ret_table.Initialize(1, Me.ModelName(model_column)) : Call ret_table.ResetColumnSize(Me.ColumnSize)
-Set ToCheckListAutoData = ret_table : Exit Function
+Call ret_table.Initialize(1, Me.ModelName(model_column))
+Call ret_table.ResetColumnSize(Me.ColumnSize)
+Set ToCheckListAutoData = ret_table
+Exit Function
 End If
 
-Call ret_table.Initialize(Ubound(model_rows), Me.ModelTitle.Data(model_column, CL_MODEL_NAME_TITLE_ROW_NUM)) : Call ret_table.ResetColumnSize(Me.ColumnSize)
+Call ret_table.Initialize(Ubound(model_rows), Me.ModelTitle.Data(model_column, CL_MODEL_NAME_TITLE_ROW_NUM))
+Call ret_table.ResetColumnSize(Me.ColumnSize)
 
-Dim iterator As TableRowIterator : Set iterator = New TableRowIterator : Call iterator.Initialize(ret_table, ret_table.BeginRowNum, ret_table.EndRowNum)
+Dim iterator As TableRowIterator
+Set iterator = New TableRowIterator
+Call iterator.Initialize(ret_table, ret_table.BeginRowNum, ret_table.EndRowNum)
 Dim row As Variant
 For Each row In model_rows
 Set iterator.Rows = Me.Rows(row)
@@ -860,7 +908,8 @@ Call ThrowArgumentException(Me, FUNCTION_NAME, "table_range", "éQè∆ÇµÇƒÇ¢ÇÈÉeÅ[É
 End If
 
 On Error GoTo CatchErr
-Dim temp As CheckListData : Set temp = table_range.Table.DownCast
+Dim temp As CheckListData
+Set temp = table_range.Table.DownCast
 If ((temp.NumModel = Me.NumModel) And (temp.RowSize = Me.RowSize)) Then
 Set Me.AllData.Rows(row) = table_range
 Else
@@ -898,11 +947,13 @@ Call ThrowArgumentOutOfRangeException(Me, FUNCTION_NAME, "head/tail", GetMsgHead
 End If
 
 On Error GoTo CatchErr
-Dim temp As CheckListData : Set temp = table_range.Table.DownCast
+Dim temp As CheckListData
+Set temp = table_range.Table.DownCast
 If ((temp.NumModel = Me.NumModel) And (temp.RowSize = Me.RowSize)) Then
 Set Me.AllData.Range(head, tail) = table_range
 Else
-Dim wrapper As TableDataWrapper : Set wrapper = New TableDataWrapper
+Dim wrapper As TableDataWrapper
+Set wrapper = New TableDataWrapper
 If (head.column < Me.NumModel) Then
 Set Me.Model.Range(head, tail) = wrapper.RowsRange(temp.Model, table_range.SourceHead.row, table_range.SourceTail.row)
 End If

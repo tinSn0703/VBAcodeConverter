@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -141,12 +141,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FormattingVB6Code.cpp" />
     <ClCompile Include="CodeSplit.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OperateVB6codeLine.cpp" />
+    <ClCompile Include="StringOperate.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FormattingVB6Code.h" />
     <ClInclude Include="CodeSplit.h" />
+    <ClInclude Include="StringOperate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

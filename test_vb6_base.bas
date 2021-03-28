@@ -52,8 +52,12 @@ Private Function IsOutOfColumnRange(ByVal num As Long) As Boolean
 	a = "n : C" : a = ""
 	a = "" : a = "n : C"
 	a = "n : C" : a = "C : n"
-	a = "n : C" : a = "C : n" : a = "C : C"
+	a = "n : C" : a = "C : n" :a = "C : C"
 	
+	a = 1 : If (IsNull(value)) Then a = 0 : b = 1
+	If (a = 0) Then a = 0 : If (b = 1) Then b = 1
+	If (a = 0) Then If (b = 1) Then b = 1
+
     IsOutOfColumnRange = ((num < Me.BeginColumnNum) Or (Me.EndColumnNum < num))
 End Function
 

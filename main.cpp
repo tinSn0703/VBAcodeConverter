@@ -152,7 +152,7 @@ class VariableElement
 	std::string _Name;
 
 public:
-	VariableElement() {}
+	VariableElement() : _Access(AccessAdornment::PUBLIC_ACCESS) {}
 
 	VariableElement(const std::string _TypeName, const std::string _Name, const AccessAdornment _Access = AccessAdornment::LOCAL_ACCESS)
 		: _TypeName (_TypeName), _Name(_Name), _Access(_Access)
@@ -289,7 +289,7 @@ class ArgumentCode : public VariableElement
 	bool _IsParmArray;
 	bool _IsOptional;
 public:
-	ArgumentCode() {}
+	ArgumentCode() : _IsReference(true), _IsParmArray(false), _IsOptional(false) {}
 };
 
 const std::string _ArgumentMatchCode = "(ByRef|ByVal|Optional|ParmArray)?[ ]?";
@@ -408,6 +408,8 @@ int OperateVB6codeLine(int argc, char* argv[], char* envp[]);
 
 int main(int argc, char* argv[], char* envp[])
 {
+	//std::cout << std::to_string(1 % 2);
+
 	return OperateVB6codeLine(argc, argv, envp);
 	/*
 	SplitFunctionElement(
