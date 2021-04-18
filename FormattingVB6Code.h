@@ -3,7 +3,7 @@
 #include <list>
 #include <string>
 
-/// <summary></summary>
+/// <summary>ファイルから取り込んだVB6コードを整形する</summary>
 class FormattingVB6Code
 {
 	/// <summary>コード内の余分なスペースを削除する。</summary>
@@ -21,6 +21,6 @@ public:
 
 	/// <summary>VB6コードを読み取りやすい形式に変換する。</summary>
 	/// <param name="_vb6_code_list"></param>
-	void Format(std::list<std::string>& _vb6_code_list);
+	std::string Format(std::list<std::string>& _vb6_code_list);
 };
 

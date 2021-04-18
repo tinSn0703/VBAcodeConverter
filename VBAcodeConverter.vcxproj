@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="FormattingVB6Code.cpp" />
     <ClCompile Include="CodeSplit.cpp" />
+    <ClCompile Include="FunctionBlock.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OperateVB6codeLine.cpp" />
     <ClCompile Include="StringOperate.cpp" />
@@ -150,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="FormattingVB6Code.h" />
     <ClInclude Include="CodeSplit.h" />
+    <ClInclude Include="FunctionBlock.h" />
     <ClInclude Include="StringOperate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

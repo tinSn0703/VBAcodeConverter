@@ -9,6 +9,7 @@
 #include <boost/version.hpp>
 #include <boost/algorithm/string.hpp>
 
+#include "FormattingVB6Code.h"
 #include "StringOperate.h"
 
 /// <summary>
@@ -132,36 +133,10 @@ int OperateVB6codeLine(int argc, char* argv[], char* envp[])
 	std::string _vb6_code;
 	while (!_vb6_file.eof()) { std::getline(_vb6_file, _vb6_code); _vb6_code_list.push_back(_vb6_code); }
 	_vb6_file.close();
-	_vb6_code = "";
 	
-	// 行末尾のスペース及びインデントの削除。タブは全てスペースに置き換える。正規表現で削除を行うと、とんでもない時間がかかるため、文字列の検索と再確保で行う。
-	for (auto _itr = std::begin(_vb6_code_list), _end = std::end(_vb6_code_list); _itr != _end; )
-	{
-		auto _temp_code = remove_code_space(*_itr);
-		
-		// 複数行への分割を単行に戻す。
-		if ((2 < _temp_code.size()) && (_temp_code.back() == '_') && (_temp_code[_temp_code.size() - 2] == ' '))
-		{
-			++_itr;								//次の行へイテレータを進める。
-			_temp_code.pop_back();				//「_」を削除
-			_temp_code += (*_itr);				//次行を連結
-			_itr = _vb6_code_list.erase(_itr);	//次行を削除
-			--_itr;								//イテレータを戻す
-			(*_itr) = _temp_code;				//再度、今行の処理を行う
-		}
-		else
-		{
-			_temp_code = replace_one_if_line(_temp_code); //一行If文を複数行にする
-			_temp_code = replace_one_code_line(_temp_code); //一行コードを複数行にする
-			
-			_vb6_code += _temp_code + "\n"; //コードを一つの変数に纏める
-			++_itr;
-		}
-	}
+	FormattingVB6Code _format;
+	_vb6_code = _format.Format(_vb6_code_list);
 	
-	_vb6_code_list.clear();
-	boost::split(_vb6_code_list, _vb6_code, boost::is_any_of("\n"));
-
 	std::ofstream _output_file(R"(D:\Project\VBAcodeConverter\test_vb6.bas)");
 	_output_file << _vb6_code;
 	_output_file.close();

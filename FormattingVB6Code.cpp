@@ -66,7 +66,7 @@ void FormattingVB6Code::replace_one_code_line(std::string& _code)
 
 //-------------------------------------------------------------------------
 
-void FormattingVB6Code::Format(std::list<std::string>& _vb6_code_list)
+std::string FormattingVB6Code::Format(std::list<std::string>& _vb6_code_list)
 {
 	std::string _vb6_code = "";
 	// 行末尾のスペース及びインデントの削除。タブは全てスペースに置き換える。正規表現で削除を行うと、とんでもない時間がかかるため、文字列の検索と再確保で行う。
@@ -97,6 +97,8 @@ void FormattingVB6Code::Format(std::list<std::string>& _vb6_code_list)
 
 	_vb6_code_list.clear();
 	boost::split(_vb6_code_list, _vb6_code, boost::is_any_of("\n"));
+
+	return _vb6_code;
 }
 
 //-------------------------------------------------------------------------
