@@ -1,5 +1,14 @@
 #pragma once
 
+#include <string>
+#include <vector>
+#include <list>
+
+#include "Atteribute.h"
+
+class CodeBlock {};
+class ArgumentCode : public CodeBlock {};
+
 /// <summary>ä÷êîÇÃÉuÉçÉbÉN</summary>
 class FunctionBlock : public CodeBlock
 {
@@ -7,24 +16,17 @@ class FunctionBlock : public CodeBlock
 	AccessAdornment _Access;
 	std::string _FunctionName;
 	std::string _ReturnType;
-	std::list<ArgumentCode> _Args;
-	std::vector<CodeBlock> _Code;
+	//std::list<ArgumentCode> _Args;
+	//std::vector<CodeBlock> _Code;
 
 public:
 	FunctionBlock();
+	//FunctionBlock(std::string _ReturnType, std::string _FunctionName, std::list<ArgumentCode> _Args, std::vector<CodeBlock> _Code, AccessAdornment _Access = AccessAdornment::PUBLIC_ACCESS, bool _IsStatic = false);
 
-	/*
-	void SplitElement(std::smatch _Code)
-	{
-		if ((_Code[1] == true) && (_Code[1].str() == "Private"))		this->_Access = AccessAdornment::PRIVATE_ACCESS;
-		else if ((_Code[1] == true) && (_Code[1].str() == "Friend"))	this->_Access = AccessAdornment::FRIEND_ACCESS;
-		else															this->_Access = AccessAdornment::PUBLIC_ACCESS;
+	//void Initialize(std::string _ReturnType, std::string _FunctionName, std::list<ArgumentCode> _Args, std::vector<CodeBlock> _Code, AccessAdornment _Access = AccessAdornment::PUBLIC_ACCESS, bool _IsStatic = false);
 
-		this->_FunctionName = _Code[3].str();
-		this->_ReturnType = _Code[5].str();
 
-		//this->_Code = _Code[7].str();
-	}
-	*/
+
+
 };
 

@@ -56,22 +56,22 @@ std::uint16_t rcount_num_word_in_str(const std::string& str, const std::string& 
 
 //-------------------------------------------------------------------------
 
-std::string& trim_consecutive_char(std::string& _code, const char _char)
+std::string& trim_consecutive_char(std::string& _str, const char _char)
 {
-	for (auto _pos = _code.find(_char); _pos != std::string::npos; )
+	for (auto _pos = _str.find(_char); _pos != std::string::npos; )
 	{
-		const auto _end_pos = _code.find_first_not_of(' ', _pos);
+		const auto _end_pos = _str.find_first_not_of(' ', _pos);
 
 		if (1 < (_end_pos - _pos))
 		{
-			_code = _code.substr(0, _pos) + _char + _code.substr(_end_pos, _code.size() - 1);
-			_pos = _code.find(_char, _pos + 1);
+			_str = _str.substr(0, _pos) + _char + _str.substr(_end_pos, _str.size() - 1);
+			_pos = _str.find(_char, _pos + 1);
 		}
 		else
 		{
-			_pos = _code.find(_char, _end_pos);
+			_pos = _str.find(_char, _end_pos);
 		}
 	}
 
-	return _code;
+	return _str;
 }

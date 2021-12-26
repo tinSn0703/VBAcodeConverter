@@ -14,4 +14,4 @@ std::uint16_t rcount_num_word_in_str(const std::string& str, const std::string& 
 /// <param name="_code"></param>
 /// <param name="_char"></param>
 /// <returns></returns>
-std::string& trim_consecutive_char(std::string& _code, const char _char);
+std::string& trim_consecutive_char(std::string& _str, const char _char);

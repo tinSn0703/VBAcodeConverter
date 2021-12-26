@@ -5,6 +5,9 @@
 #include <regex>
 #include <map>
 
+#include <boost/version.hpp>
+#include <boost/algorithm/string.hpp>
+
 /**
  * 解析上無視する項目
  *  デフォルトプロパティ
@@ -70,74 +73,10 @@ Call MsgBox(“test ” & _ ‘NG
  これ、本当に再帰で数千行はあるようなお排泄物プロシージャを取り込んだら、メモリがやばいことになるかも
 **/
 
-/// <summary>アクセス修飾子</summary>
-enum class AccessAdornment
-{
-	LOCAL_ACCESS,
-	PUBLIC_ACCESS,
-	PRIVATE_ACCESS,
-	FRIEND_ACCESS,
-};
+#include "Atteribute.h"
 
-std::string ToAceessString(AccessAdornment _Access)
-{
-	switch (_Access)
-	{
-		case AccessAdornment::LOCAL_ACCESS:		return "";
-		case AccessAdornment::PUBLIC_ACCESS:	return "public";
-		case AccessAdornment::PRIVATE_ACCESS:	return "private";
-		case AccessAdornment::FRIEND_ACCESS:	return "friend";
-		default: break;
-	}
-}
 
-/// <summary>演算子</summary>
-enum class Operator
-{
-	MULTIPLY_OPERATOR,	//乗算
-	RAISING_OPERATOR,	//累乗
-	DIVIDE_OPERATOR,	//除算
-	SURPLUS_OPERATOR,	//余り
-	PLUS_OPERATOR,		//加算
-	MINUS_OPERATOR,		//減算
-	EQUAL_OPERATOR,		//等価
-	IS_OPERATOR,		//型互換確認
-	LIKE_OPRATOR,		//文字列比較(正規表現で再現する)
-	AND_OPERATOR,		// A & B
-	OR_OPERATOR,		// A | B
-	NOT_OPRATOR,		// A ! B
-	XOR_OPERATOR,		// A ^ B
-	EQV_OPRATOR,		// !(A ^ B)
-	IMP_OPRATOR,		// (!A) | B
-};
-
-/// <summary></summary>
-/// <param name="_Operator"></param>
-/// <param name="_RightValue"></param>
-/// <param name="_LeftValue"></param>
-/// <returns></returns>
-std::string ToString(Operator _Operator, std::string _RightValue, std::string _LeftValue)
-{
-	switch (_Operator)
-	{
-		case Operator::MULTIPLY_OPERATOR:	return _RightValue + " * " + _LeftValue;
-		case Operator::RAISING_OPERATOR:	return "Math.Pow(" + _RightValue + ", " + _LeftValue + ")";
-		case Operator::DIVIDE_OPERATOR:		return _RightValue + " / " + _LeftValue;
-		case Operator::SURPLUS_OPERATOR:	return _RightValue + " % " + _LeftValue;
-		case Operator::PLUS_OPERATOR:		return _RightValue + " + " + _LeftValue;
-		case Operator::MINUS_OPERATOR:		return _RightValue + " - " + _LeftValue;
-		case Operator::EQUAL_OPERATOR:		return _RightValue + " = " + _LeftValue;
-		case Operator::IS_OPERATOR:			return _RightValue + " is " + _LeftValue;
-		case Operator::LIKE_OPRATOR:		return _RightValue + "" + _LeftValue;
-		case Operator::NOT_OPRATOR:			return " !" + _RightValue;
-		case Operator::AND_OPERATOR:		return _RightValue + " && " + _LeftValue;
-		case Operator::OR_OPERATOR:			return _RightValue + " || " + _LeftValue;
-		case Operator::XOR_OPERATOR:		return _RightValue + " ^ " + _LeftValue;
-		case Operator::EQV_OPRATOR:			return "!(" + _RightValue + " ^ " + _LeftValue + ")";
-		case Operator::IMP_OPRATOR:			return "(!(" + _RightValue + ") | " + _LeftValue + ")";
-	}
-}
-
+/*
 class VariableElement;
 
 /// <summary>グローバル変数のリスト</summary>
@@ -325,6 +264,7 @@ class StructBlock : public TypeBlock
 	std::list<VariableElement> _MemberList;
 
 public:
+	StructBlock(const std::string& _Name) : TypeBlock(_Name) {}
 };
 
 /// <summary>クラス</summary>
@@ -332,7 +272,8 @@ class ClassBlock : public TypeBlock
 {
 	std::string _BaseTypeName; //継承元
 
-	std::list< std::shared_ptr<VariableElement>> _MemberList; //メンバー一覧
+	std::list <std::shared_ptr<TypeBlock>> _TypeList;
+	std::list<std::shared_ptr<VariableElement>> _MemberList; //メンバー一覧
 	std::list<std::shared_ptr<FunctionBlock>> _MethodList; //メソッド一覧
 
 	std::vector<CodeBlock> _ClassCode; //クラスのコード全体。
@@ -358,7 +299,7 @@ Match
 [7] 戻り値 型名
 [8] 関数内コード
 [9] Function|Sub //どうでもいい
-*/
+
 	const std::string _AccessMatchCode = R"((Public|Private|Friend)??\s*)";
 	const std::string _StaticMatchCode = R"((Static)??\s*)";
 	const std::string _FunctionNameMatchCode = R"((Function|Sub)\s*(\w+?)\s*)";
@@ -378,13 +319,39 @@ Match
 	return std::list<FunctionBlock>();
 }
 
+*/
+
 int OperateVB6codeLine(int argc, char* argv[], char* envp[]);
+int SplitVB6codeLine(int argc, char* argv[], char* envp[]);
 
 int main(int argc, char* argv[], char* envp[])
 {
 	//std::cout << std::to_string(1 % 2);
+	
+	
+	std::string _code = "Call Log.WriteLog(Log.DEBUG_LOG_LEVEL, Me, \"Class_Initialize()\", \"object[\" & TypeName(Me) & \"] has been created \"\" aa \"\" .\")";
+	std::list<std::string> _code_list;
+	boost::split(_code_list, _code, boost::is_any_of("\""));
 
-	return OperateVB6codeLine(argc, argv, envp);
+	std::cout << _code << std::endl;
+	for (auto _itr = std::begin(_code_list), _end = std::end(_code_list); _itr != _end; _itr++)
+	{
+		std::cout << (*_itr) << std::endl;
+	}
+
+	/*
+	const auto _begin = std::begin(_code);
+	for (auto _itr = std::begin(_code), _end = std::end(_code); _itr != _end; _itr++)
+	{
+		if ((*_itr) == 'a')
+		{
+			std::cout << (size_t)(_itr - _begin) << std::endl;
+		}
+	}
+	*/
+
+
+	//return OperateVB6codeLine(argc, argv, envp);
 	/*
 	SplitFunctionElement(
 R"('----------------------------------------------------------------------------------------------------

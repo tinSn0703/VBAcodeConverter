@@ -14,6 +14,17 @@
 
 //-------------------------------------------------------------------------
 
+bool FormattingVB6Code::is_continuous_line(const std::string& _code)
+{
+	// コードが2文字以下の場合は判断しない
+	if (_code.size() < 2) return false;
+
+	//コードが複数行にまたがっているか
+	return ((_code.back() == '_') && (_code[_code.size() - 2] == ' '));
+}
+
+//-------------------------------------------------------------------------
+
 void FormattingVB6Code::remove_code_space(std::string& _code)
 {
 	if (_code.size() < 1) return;
@@ -32,7 +43,7 @@ void FormattingVB6Code::replace_one_if_line(std::string& _code)
 	if (std::regex_match(_code, _match, std::regex(R"((.*?)If[ ]?([^\n]+?)[ ]?Then ([^'\n].+?))", std::regex_constants::icase)))
 	{
 		std::string temp = _match[3].str();
-		replace_one_if_line(temp); //再帰的に関数を呼び出すことで、複数のif文が1行に結合されている状態をIf () Then ~ End If形式のネストにする。
+		this->replace_one_if_line(temp); //再帰的に関数を呼び出すことで、複数のif文が1行に結合されている状態をIf () Then ~ End If形式のネストにする。
 
 		_code = _match[1].str() + "If " + _match[2].str() + " Then\n" + temp + "\nEnd If";
 	}
@@ -73,10 +84,10 @@ std::string FormattingVB6Code::Format(std::list<std::string>& _vb6_code_list)
 	for (auto _itr = std::begin(_vb6_code_list), _end = std::end(_vb6_code_list); _itr != _end; )
 	{
 		auto _temp_code = (*_itr);
-		remove_code_space(_temp_code);
+		this->remove_code_space(_temp_code);
 
 		// 複数行への分割を単行に戻す。
-		if ((2 < _temp_code.size()) && (_temp_code.back() == '_') && (_temp_code[_temp_code.size() - 2] == ' '))
+		if (this->is_continuous_line(_temp_code))
 		{
 			++_itr;								//次の行へイテレータを進める。
 			_temp_code.pop_back();				//「_」を削除
@@ -87,8 +98,8 @@ std::string FormattingVB6Code::Format(std::list<std::string>& _vb6_code_list)
 		}
 		else
 		{
-			replace_one_if_line(_temp_code); //一行If文を複数行にする
-			replace_one_code_line(_temp_code); //一行コードを複数行にする
+			this->replace_one_if_line(_temp_code); //一行If文を複数行にする
+			this->replace_one_code_line(_temp_code); //一行コードを複数行にする
 
 			_vb6_code += _temp_code + "\n"; //コードを一つの変数に纏める
 			++_itr;

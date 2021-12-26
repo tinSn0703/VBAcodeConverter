@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FormatingVB6CodeSpace.cpp" />
     <ClCompile Include="FormattingVB6Code.cpp" />
     <ClCompile Include="CodeSplit.cpp" />
     <ClCompile Include="FunctionBlock.cpp" />
@@ -149,10 +150,16 @@
     <ClCompile Include="StringOperate.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Atteribute.h" />
+    <ClInclude Include="Formating.h" />
+    <ClInclude Include="FormatingVB6CodeSpace.h" />
     <ClInclude Include="FormattingVB6Code.h" />
     <ClInclude Include="CodeSplit.h" />
     <ClInclude Include="FunctionBlock.h" />
     <ClInclude Include="StringOperate.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="進捗.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
